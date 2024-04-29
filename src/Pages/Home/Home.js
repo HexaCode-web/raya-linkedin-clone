@@ -80,7 +80,8 @@ const Home = ({ User }) => {
         <div className="Data">
           <img src={postCreator.Profile} className="profilePhoto"></img>
           <p className="name">
-            {postCreator.Fname} {postCreator.Lname}
+            {postCreator ? postCreator.Fname : "deleted user"}{" "}
+            {postCreator?.Lname}
           </p>
         </div>
         <div className="Date">

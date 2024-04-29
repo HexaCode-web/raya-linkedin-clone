@@ -31,7 +31,11 @@ const Profile = () => {
       <div className="Photos">
         <img className="Banner" src={User?.Cover}></img>
 
-        <img src={User?.Profile} className="profilePhoto"></img>
+        <img
+          src={User?.Profile}
+          style={{ position: User?.Cover ? "absolute" : "static" }}
+          className="profilePhoto"
+        ></img>
       </div>
       <div className="generalInfo">
         <h2 className="Header">General Info</h2>
