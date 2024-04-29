@@ -78,7 +78,7 @@ const Home = ({ User }) => {
     return (
       <div className="Post" key={Post.ID}>
         <div className="Data">
-          <img src={postCreator.Profile} className="profilePhoto"></img>
+          <img src={postCreator?.Profile} className="profilePhoto"></img>
           <p className="name">
             {postCreator ? postCreator.Fname : "deleted user"}{" "}
             {postCreator?.Lname}
