@@ -1,0 +1,50 @@
+.Photos {
+  position: relative;
+  margin-bottom: 120px;
+}
+.Photos .Banner {
+  width: 100%;
+  max-height: 400px;
+  display: block;
+}
+.Photos .profilePhoto {
+  position: absolute;
+  top: 81%;
+  left: 10px;
+  width: 150px;
+  border-radius: 50%;
+}
+.Header {
+  background-color: white;
+  position: absolute;
+  top: -22px;
+  left: 18px;
+}
+.generalInfo,
+.About,
+.CV {
+  position: relative;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 97%;
+  margin: 40px auto;
+  border: 1px solid var(--borders);
+  border-radius: 15px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+.generalInfo .name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.generalInfo .location {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+.generalInfo .Button {
+  padding: 5px;
+  width: 100px;
+}

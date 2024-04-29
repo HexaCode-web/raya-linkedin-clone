@@ -1,0 +1,241 @@
+.NavContainer {
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.658);
+  display: flex;
+  height: 60px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  transition: 0.5s all;
+}
+.NavContainer-bg {
+  position: fixed;
+  height: 45px;
+  top: 0;
+  background-color: #f3f3f3;
+}
+
+.NavContainer-bg .navbar a,
+.NavContainer-bg .navbar a:focus,
+.NavContainer-bg .Pricing {
+  color: black;
+}
+.hidden {
+  display: none !important;
+}
+.Logo {
+  cursor: pointer;
+  width: auto;
+  height: 60px;
+  transition: 0.5s all;
+}
+.Logo.Small {
+  height: 35px;
+}
+.NavContainer a {
+  text-decoration: none;
+}
+.navbar {
+  width: 100%;
+  padding: 0;
+}
+.navbar ul {
+  justify-content: center;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+  transition: 0.2s all;
+  border: 1.5px solid transparent;
+}
+.navbar a,
+.navbar a:focus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--Font);
+  font-size: 1rem;
+  color: var(--text);
+  white-space: nowrap;
+  transition: 0.3s;
+}
+.navbar a:before {
+  display: block;
+  content: "";
+  height: 2px;
+  background: var(--LinkLines);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  left: 0;
+  bottom: -10px;
+  position: absolute;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.dropdown ul a:before {
+  left: 20px;
+  width: 80%;
+  bottom: 0;
+}
+.navbar a:hover:before {
+  transform: scaleX(1);
+}
+
+.navbar a i,
+.navbar a:focus i {
+  font-size: 1.2rem;
+  line-height: 0;
+  margin-left: 5px;
+}
+#navbar {
+  display: block;
+}
+.navbar a:hover,
+.navbar .active,
+.navbar .active:focus,
+.navbar li:hover > a {
+  color: black;
+}
+a:hover {
+  color: var(--HoverText) !important;
+}
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+
+  top: calc(100% + 30px);
+  margin: 0;
+  padding: 10px;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: 0.3s;
+}
+
+.navbar .dropdown ul li {
+  min-width: 200px;
+  padding: 10px 20px;
+}
+
+.navbar .dropdown ul a {
+  font-size: 14px;
+  text-transform: none;
+  color: #1c3745;
+  width: 100%;
+}
+
+.navbar .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover,
+.navbar .dropdown ul .active:hover,
+.navbar .dropdown ul li:hover > a {
+  color: var(--HoverText);
+}
+.ActiveLink:before {
+  display: block;
+  content: "";
+  height: 2px;
+  background: var(--LinkLines);
+  transform: scaleX(1) !important;
+  transform-origin: 0 50%;
+  left: 0;
+  bottom: -10px;
+  position: absolute;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar .dropdown:hover > ul {
+  opacity: 1;
+  top: 36px;
+  visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+  top: 0;
+  left: calc(100% - 30px);
+  visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover > ul {
+  opacity: 1;
+  top: 0;
+  left: 100%;
+  visibility: visible;
+}
+
+@media (max-width: 1366px) {
+  .navbar .dropdown .dropdown ul {
+    left: -90%;
+  }
+
+  .navbar .dropdown .dropdown:hover > ul {
+    left: -100%;
+  }
+}
+@media (max-width: 1000px) {
+  .Logo {
+    max-width: 150px;
+  }
+  .NavContainer {
+    height: 60px;
+    position: sticky;
+  }
+}
+.Pricing {
+  border: 2px solid var(--buttons);
+  background-color: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.9rem;
+  font-style: normal;
+
+  line-height: 1.6;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+  transition-timing-function: ease;
+  z-index: 1;
+}
+.Pricing:hover {
+  color: white;
+  background-color: var(--buttons);
+}
+.Pricing:after {
+  content: "";
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  position: absolute;
+  top: 54%;
+  right: 5px;
+  background-color: var(--buttons);
+  animation: FadeInOut 1.6s infinite;
+}
+@keyframes FadeInOut {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

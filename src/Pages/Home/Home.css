@@ -1,0 +1,103 @@
+.Home {
+  display: flex;
+  justify-content: center;
+  align-items: space-between;
+  gap: 2%;
+  padding: 20px 0;
+  background-color: #f4f2ee;
+}
+.Home .SideBar {
+  background-color: #ffffff;
+  width: 20%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+  height: 300px;
+}
+.Home .SideBar .Photos {
+  margin-bottom: 0;
+}
+.Home .SideBar .Banner {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+
+  width: 100%;
+}
+.Home .SideBar .profilePhoto {
+  width: 50px;
+  border-radius: 50%;
+  left: -24px;
+  bottom: 0;
+}
+.Home .SideBar .name {
+  margin-top: 50px;
+  text-align: center;
+}
+.Home .Main {
+  border-radius: 15px;
+  padding: 20px;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+.PostInput {
+  background-color: white;
+  color: black;
+  border-radius: 30px;
+  width: 100%;
+}
+.Post-wrapper {
+  background-color: white;
+
+  position: relative;
+  padding: 10px;
+  display: flex;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  gap: 2%;
+}
+
+.Post-wrapper .Button {
+  border-radius: 15px;
+  padding: 5px;
+  height: 30px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Post-wrapper .profilePhoto,
+.Post .profilePhoto {
+  width: 40px;
+  border-radius: 50%;
+}
+.Post {
+  background-color: white;
+  position: relative;
+  padding: 10px;
+  display: flex;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 2%;
+  margin-top: 10px;
+}
+.Post .Data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.Post .Data p {
+  margin-bottom: 0;
+}
+.Post .Date {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-left: 50px;
+}

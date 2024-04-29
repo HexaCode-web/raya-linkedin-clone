@@ -1,0 +1,23 @@
+.Confirm .modal-content {
+  width: 50%;
+  height: fit-content;
+  margin: auto;
+}
+.Confirm .modal-header {
+  position: static;
+}
+.Confirm .modal-body {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+/* .Confirm .modal-body input {
+  margin: 10px 0 20px 0;
+  border: none;
+  border-bottom: 1px solid var(--buttons);
+  height: 50px;
+  width: 100%;
+} */
+.Confirm .modal-body input:focus {
+  outline: none;
+}

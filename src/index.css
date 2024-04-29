@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  --buttons: #00502e;
+  --text: #212c58;
+  --borders: #00502e;
+  --icons: #588ec5;
+  --Lines: #609ddb;
+  --HoverText: #00502e;
+  --LinkLines: #00502e;
+}
+.Link:focus,
+.Link {
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 20px;
+  position: relative;
+  text-decoration: none;
+  width: fit-content;
+  color: black;
+  padding: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-size: 0.9rem;
+}
+.Link:before {
+  display: block;
+  content: "";
+  padding-top: 4px;
+  border-bottom: solid 1px var(--LinkLines);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  left: 20px;
+  bottom: 15px;
+  position: absolute;
+  width: 80%;
+  transition: transform 0.3s ease-in-out;
+}
+.Link:hover:before {
+  transform: scaleX(1);
+}
+.Link:after {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12' fill='none' viewBox='0 0 20 9'%3E%3Cpath stroke='%2317161e' d='M0 4.547h19m0 0L15.544 1M19 4.547l-3.456 3.546'/%3E%3C/svg%3E");
+  background-position: 100%;
+  background-repeat: no-repeat;
+  content: "";
+  height: 25px;
+  padding-left: 10px;
+  padding-top: inherit;
+  position: absolute;
+  right: -7px;
+  transition: background 0.1s ease-in-out;
+  width: 20px;
+  transition: 0.5s all;
+}
+html,
+.app {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+.Button {
+  cursor: pointer;
+  background-color: var(--buttons);
+  border: none;
+  color: white;
+  width: fit-content;
+  font-size: 1rem;
+  border-radius: 5px;
+  padding: 15px;
+  font-weight: 600;
+  transition: 0.2s all;
+}
+.Button:hover {
+  scale: 1.05;
+}
+body {
+  color: black;
+  background: white;
+}
+.FADE {
+  opacity: 0;
+  z-index: -1 !important;
+}
+body {
+  padding: 0.2rem;
+  min-height: 100vh;
+}
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}

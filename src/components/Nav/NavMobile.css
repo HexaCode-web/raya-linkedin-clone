@@ -1,0 +1,59 @@
+.SideMenu {
+  backdrop-filter: blur(10px); /* Apply the blur effect */
+  width: 100vw;
+  background-color: #020d1c;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+.SideMenu .navbar {
+  overflow-y: auto;
+  margin-top: 30px;
+}
+.navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a{
+  color: unset;
+}
+/* Hide the scrollbar */
+.navbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* Customize scrollbar track */
+.navbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Customize scrollbar thumb */
+.navbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+/* Enable scrolling */
+
+.SideMenu .navbar a {
+  color: white;
+}
+.SideMenu .navbar,
+.SideMenu .navbar ul {
+  flex-direction: column;
+}
+.SideMenu .navbar .dropdown {
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.SideMenu .navbar ul a {
+  font-size: 1.2rem;
+}
+
+.SideMenu .Pricing {
+  font-size: 1.2rem;
+  background-color: var(--buttons);
+  color: white;
+  font-weight: 300;
+}
