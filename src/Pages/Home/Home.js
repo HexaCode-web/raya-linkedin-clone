@@ -4,7 +4,6 @@ import "./Home.css";
 import { v4 as uuidv4 } from "uuid";
 import { CreateToast } from "../../App";
 import { GETCOLLECTION, SETDOC } from "../../server";
-import { BiSolidLike } from "react-icons/bi";
 
 const Home = ({ User }) => {
   const [newPost, setNewPost] = useState({

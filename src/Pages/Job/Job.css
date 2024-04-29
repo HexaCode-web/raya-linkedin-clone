@@ -1,0 +1,49 @@
+.JobOffer {
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.JobOffer h4 {
+  font-size: 2rem;
+  color: var(--text);
+  margin-bottom: 30px;
+}
+.JobDetails {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.JobDetails .Detail {
+  margin: 5px 0;
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+.Description {
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  flex-direction: column;
+}
+.Description div p {
+  text-align: left;
+  margin-left: 0;
+}
+.Description .Description {
+  margin: 40px;
+
+  font-size: 1.5rem;
+  width: 100%;
+  color: var(--text);
+}
+
+.Description ul,
+.Description ul li {
+  list-style-type: disc;
+  width: 100%;
+  text-align: left;
+}
