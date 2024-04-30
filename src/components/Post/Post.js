@@ -1,0 +1,97 @@
+import React, { useState } from "react";
+import { FaRegCommentAlt } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
+import { CreateToast } from "../../App";
+
+import "./Post.css";
+import { SETDOC } from "../../server";
+import PostPopup from "../Post Popup/Post Popup";
+const Post = ({ post, postCreator, User, users }) => {
+  const [Post, setPost] = useState(post);
+  const [showPopup, setShowPopup] = useState(false);
+  const [userLiked, setUserLiked] = useState(
+    Post.Likes.find((like) => like === User.id)
+  );
+  const LikePost = async () => {
+    // eslint-disable-next-line no-debugger
+    let newLikes;
+    const alreadyLiked = Post.Likes.find((like) => like === User.id);
+    if (alreadyLiked) {
+      setUserLiked(false);
+
+      newLikes = Post.Likes.filter((like) => like !== User.id);
+      setPost((prev) => {
+        return { ...prev, Likes: newLikes };
+      });
+    } else {
+      setUserLiked(true);
+      setPost((prev) => {
+        return { ...prev, Likes: [...prev.Likes, User.id] };
+      });
+    }
+
+    await SETDOC(
+      "Posts",
+      Post.ID,
+      { ...Post, Likes: alreadyLiked ? newLikes : [...Post.Likes, User.id] },
+      false
+    );
+  };
+  const togglePopup = () => {
+    setShowPopup((prev) => !prev);
+  };
+  const AddComment = async (comment) => {
+    if (!User) {
+      CreateToast("you aren't signed in", "error");
+      return;
+    }
+    const newPost = { ...Post, Comments: [comment, ...Post.Comments] };
+    await SETDOC("Posts", Post.ID, { ...newPost }, false);
+    setPost(newPost);
+  };
+  return (
+    <div className="Post">
+      <div
+        className="Data"
+        onClick={() => {
+          window.location.href = `/Profile/${postCreator?.id}`;
+        }}
+      >
+        <img src={postCreator?.Profile} className="profilePhoto"></img>
+        <p className="name">
+          {postCreator ? postCreator.Fname : "deleted user"}{" "}
+          {postCreator?.Lname}
+        </p>
+      </div>
+      <div className="Date">
+        <p>{Post.Date}</p>
+      </div>
+      <div className="PostBody">
+        <p>{Post.Body}</p>
+      </div>
+      <div className="Buttons">
+        <div className="Like" onClick={LikePost}>
+          {userLiked ? <AiFillLike /> : <AiOutlineLike />} {Post.Likes.length}
+        </div>
+        <div className="Comment" onClick={togglePopup}>
+          <FaRegCommentAlt />
+          {Post.Comments.length}
+        </div>
+      </div>
+      {showPopup && (
+        <PostPopup
+          post={Post}
+          postCreator={postCreator}
+          userLiked={userLiked}
+          LikePost={LikePost}
+          togglePopup={togglePopup}
+          AddComment={AddComment}
+          users={users}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Post;

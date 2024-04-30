@@ -5,13 +5,14 @@ import { v4 as uuidv4 } from "uuid";
 import { CreateToast } from "../../App";
 import { GETCOLLECTION, SETDOC } from "../../server";
 
+import Post from "../../components/Post/Post";
 const Home = ({ User }) => {
   const [newPost, setNewPost] = useState({
     ID: "",
     Creator: "",
     Body: "",
     Date: getCurrentDateFormatted(),
-    Likes: 0,
+    Likes: [],
     Comments: [],
   });
   const [posts, SetPosts] = useState([]);
@@ -72,24 +73,16 @@ const Home = ({ User }) => {
   useEffect(() => {
     FetchPosts();
   }, []);
-  const RenderPosts = posts.map((Post) => {
-    const postCreator = users.find((user) => user.id === Post.Creator);
+  const RenderPosts = posts.map((post) => {
+    const postCreator = users.find((user) => user.id === post.Creator);
     return (
-      <div className="Post" key={Post.ID}>
-        <div className="Data">
-          <img src={postCreator?.Profile} className="profilePhoto"></img>
-          <p className="name">
-            {postCreator ? postCreator.Fname : "deleted user"}{" "}
-            {postCreator?.Lname}
-          </p>
-        </div>
-        <div className="Date">
-          <p>{Post.Date}</p>
-        </div>
-        <div className="PostBody">
-          <p>{Post.Body}</p>
-        </div>
-      </div>
+      <Post
+        post={post}
+        postCreator={postCreator}
+        key={post.id}
+        User={User}
+        users={users}
+      />
     );
   });
   return (
