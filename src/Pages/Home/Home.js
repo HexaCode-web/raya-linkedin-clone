@@ -36,6 +36,9 @@ const Home = ({ User }) => {
     });
   };
   const uploadPost = async () => {
+    if (newPost.Body === "") {
+      return;
+    }
     setNewPost({
       ID: "",
       Creator: "",

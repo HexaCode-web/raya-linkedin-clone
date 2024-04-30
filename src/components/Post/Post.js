@@ -46,6 +46,9 @@ const Post = ({ post, postCreator, User, users }) => {
       CreateToast("you aren't signed in", "error");
       return;
     }
+    if (comment.replyText === "") {
+      return;
+    }
     const newPost = { ...Post, Comments: [comment, ...Post.Comments] };
     await SETDOC("Posts", Post.ID, { ...newPost }, false);
     setPost(newPost);
