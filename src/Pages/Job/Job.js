@@ -12,11 +12,14 @@ const Job = ({ user, users }) => {
     const FetchJob = async () => {
       const fetchedJob = await GETDOC("Jobs", id);
       setJob(fetchedJob);
-      setCreator(users.find((user) => user.id === fetchedJob.Creator));
     };
     FetchJob();
   }, []);
   useEffect(() => {
+    const FetchJob = async () => {
+      setCreator(users.find((user) => user.id === job.Creator));
+    };
+    FetchJob();
     setAlreadyApplied(
       job?.Applicants.find((Applicant) => Applicant === user.id)
     );
@@ -70,6 +73,7 @@ const Job = ({ user, users }) => {
     await SETDOC("Jobs", id, newJob);
     CreateToast("successfully applied", "success");
   };
+  console.log(creator);
   return (
     <div className="JobOffer">
       {job ? (

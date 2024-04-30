@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Settings from "./Pages/Settings/Settings";
 import JobManager from "./Pages/JobManager/JobManager";
 import Job from "./Pages/Job/Job";
+import EditJob from "./Pages/JobManager/CreateJob/EditJob";
 export const CreateToast = (text, type, duration = 4000) => {
   let value;
   switch (type) {
@@ -125,6 +126,10 @@ function App() {
           element={<Job user={user} users={users} />}
         ></Route>
         <Route path="/Profile/:ID" element={<Profile />}></Route>
+        <Route
+          path="/JobsManager/jobs/:ID"
+          element={user ? <EditJob user={user} Users={users} /> : <Portal />}
+        ></Route>
       </Routes>
     </div>
   );

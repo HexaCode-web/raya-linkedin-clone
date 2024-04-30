@@ -7,10 +7,11 @@ import { GETDOC, decrypt } from "../../server";
 import { IoIosAdd } from "react-icons/io";
 import NotFound from "../NotFound/NotFound";
 import CreateJob from "./CreateJob/CreateJob";
+import General from "./General";
 
 const Dashboard = ({ User }) => {
   const [greeting, setGreeting] = useState("");
-  const [activePage, setActivePage] = useState("Users");
+  const [activePage, setActivePage] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [ActiveUser, setActiveUser] = useState(User);
   const [width, setWidth] = useState(window.innerWidth);
@@ -121,6 +122,7 @@ const Dashboard = ({ User }) => {
             />
           </div>
           <div className="Page">
+            {activePage === "" && <General User={User} />}
             {activePage === "Create" && <CreateJob User={User} />}
           </div>
         </>

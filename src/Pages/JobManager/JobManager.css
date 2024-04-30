@@ -185,7 +185,10 @@
   color: white;
   border-radius: 5px;
 }
-
+.Button.View,
+.Button.Danger {
+  padding: 5px;
+}
 @media (max-width: 800px) {
   .Dashboard {
     width: 100vw;
