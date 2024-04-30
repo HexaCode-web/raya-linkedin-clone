@@ -52,3 +52,15 @@
   opacity: 0.7;
   margin-left: 50px;
 }
+.JobCard .status {
+  width: 150px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  color: white;
+  border: 10px;
+  font-weight: bolder;
+  border-radius: 10px;
+}

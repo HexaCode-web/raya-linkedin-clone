@@ -5,10 +5,20 @@
   justify-content: center;
   align-items: flex-start;
 }
+.Title {
+  color: var(--text);
+
+  margin-bottom: 30px;
+}
+.Title h6 {
+  margin-left: 10px;
+}
+.Title .location {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
 .JobOffer h4 {
   font-size: 2rem;
-  color: var(--text);
-  margin-bottom: 30px;
 }
 .JobDetails {
   display: flex;

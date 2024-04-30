@@ -105,7 +105,7 @@ function App() {
         ></Route>
         <Route
           path="/Jobs"
-          element={user ? <Jobs Users={users} /> : <Portal />}
+          element={user ? <Jobs Users={users} user={user} /> : <Portal />}
         ></Route>
         <Route
           path="/Settings"
@@ -120,7 +120,10 @@ function App() {
           path="/JobsManager"
           element={user ? <JobManager User={user} /> : <Portal />}
         ></Route>
-        <Route path="/Job/:ID" element={<Job />}></Route>
+        <Route
+          path="/Job/:ID"
+          element={<Job user={user} users={users} />}
+        ></Route>
         <Route path="/Profile/:ID" element={<Profile />}></Route>
       </Routes>
     </div>

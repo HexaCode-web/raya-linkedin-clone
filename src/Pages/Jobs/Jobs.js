@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { GETCOLLECTION } from "../../server";
 import "./Jobs.css";
-const Jobs = ({ Users }) => {
+const Jobs = ({ Users, user }) => {
   const [jobs, setJobs] = useState([]);
+
   useEffect(() => {
     const FetchJobs = async () => {
       setJobs(await GETCOLLECTION("Jobs"));
@@ -10,6 +11,9 @@ const Jobs = ({ Users }) => {
     FetchJobs();
   }, []);
   const renderJobs = jobs.map((job) => {
+    const alreadyApplied = job.Applicants.find(
+      (Applicant) => Applicant === user.id
+    );
     const jobCreator = Users.find((user) => user.id === job.Creator);
     return (
       <div
@@ -32,6 +36,7 @@ const Jobs = ({ Users }) => {
         <div className="Date">
           <p>{job.DateAdded}</p>
         </div>
+        {alreadyApplied && <div className="status">Applied</div>}
       </div>
     );
   });
