@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Nav.css";
 import NavDesktop from "./NavDesktop";
 import NavMobile from "./NavMobile";
-import Logo from "../../assests/logo.jpg";
+import Logo from "../../assests/logo.png";
 const Nav = ({ screenWidth, User, SearchValue, setSearchValue }) => {
   const [Color, setColor] = useState(false);
 

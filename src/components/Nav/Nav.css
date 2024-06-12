@@ -46,7 +46,7 @@
 .Logo {
   cursor: pointer;
   width: auto;
-  height: 60px;
+  height: 40px;
   transition: 0.5s all;
 }
 .Logo.Small {
