@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { DELETEDOC, GETDOC, SETDOC, decrypt } from "../../../server";
+import {
+  DELETEDOC,
+  GETCOLLECTION,
+  GETDOC,
+  SETDOC,
+  decrypt,
+} from "../../../server";
 import NotFound from "../../NotFound/NotFound";
 import Input from "../../../components/Input/Input";
 import { CreateToast } from "../../../App";
 import TipTap from "../RichTextEditor/tiptap";
 import DataTable from "react-data-table-component";
 
-const EditJob = ({ user, Users }) => {
+const EditJob = ({ user }) => {
+  const [Users, setUsers] = useState([]);
+  useEffect(() => {
+    const FetchUsers = async () => {
+      setUsers(await GETCOLLECTION("users"));
+    };
+    FetchUsers();
+  }, []);
   const id = useParams().ID;
   const [job, setJob] = useState({});
   const [authorized, setAuthorized] = useState(null);

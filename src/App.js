@@ -14,6 +14,7 @@ import Settings from "./Pages/Settings/Settings";
 import JobManager from "./Pages/JobManager/JobManager";
 import Job from "./Pages/Job/Job";
 import EditJob from "./Pages/JobManager/CreateJob/EditJob";
+import Search from "./Pages/Search/Search";
 export const CreateToast = (text, type, duration = 4000) => {
   let value;
   switch (type) {
@@ -46,12 +47,11 @@ export const CreateToast = (text, type, duration = 4000) => {
 };
 function App() {
   const [user, setUser] = useState(
-    JSON.parse(sessionStorage.getItem("activeUser")) || ""
+    JSON.parse(sessionStorage.getItem("activeUser")) || null
   );
-  const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   const [width, setWidth] = useState(window.innerWidth);
+  const [SearchValue, setSearchValue] = useState("");
   function handleWindowSizeChange() {
     setWidth(window.innerWidth);
   }
@@ -76,12 +76,7 @@ function App() {
       setIsLoading(false);
     }
   }, []);
-  useEffect(() => {
-    const FetchUsers = async () => {
-      setUsers(await GETCOLLECTION("users"));
-    };
-    FetchUsers();
-  }, []);
+
   return (
     <div className="App">
       <ToastContainer
@@ -97,40 +92,48 @@ function App() {
         theme="colored"
       />
       <Loading loading={isLoading} />
-      <Nav screenWidth={width} User={user} />
-
-      <Routes>
-        <Route
-          path="/"
-          element={user ? <Home User={user} /> : <Portal />}
-        ></Route>
-        <Route
-          path="/Jobs"
-          element={user ? <Jobs Users={users} user={user} /> : <Portal />}
-        ></Route>
-        <Route
-          path="/Settings"
-          element={user ? <Settings /> : <Portal />}
-        ></Route>
-        <Route
-          path="/Profile"
-          element={user ? <Profile User={user} /> : <Portal />}
-        ></Route>
-        <Route path="*" element={<NotFound />}></Route>
-        <Route
-          path="/JobsManager"
-          element={user ? <JobManager User={user} /> : <Portal />}
-        ></Route>
-        <Route
-          path="/Job/:ID"
-          element={<Job user={user} users={users} />}
-        ></Route>
-        <Route path="/Profile/:ID" element={<Profile />}></Route>
-        <Route
-          path="/JobsManager/jobs/:ID"
-          element={user ? <EditJob user={user} Users={users} /> : <Portal />}
-        ></Route>
-      </Routes>
+      <Nav
+        screenWidth={width}
+        User={user}
+        setSearchValue={setSearchValue}
+        SearchValue={SearchValue}
+      />
+      {SearchValue ? (
+        <Search SearchValue={SearchValue} User={user} />
+      ) : (
+        <Routes>
+          <Route
+            path="/"
+            element={user ? <Home User={user} /> : <Portal />}
+          ></Route>
+          <Route
+            path="/Jobs"
+            element={user ? <Jobs user={user} /> : <Portal />}
+          ></Route>
+          <Route
+            path="/Settings"
+            element={user ? <Settings /> : <Portal />}
+          ></Route>
+          <Route
+            path="/Profile"
+            element={user ? <Profile User={user} /> : <Portal />}
+          ></Route>
+          <Route path="*" element={<NotFound />}></Route>
+          <Route
+            path="/JobsManager"
+            element={user ? <JobManager User={user} /> : <Portal />}
+          ></Route>
+          <Route path="/Job/:ID" element={<Job user={user} />}></Route>
+          <Route
+            path="/Profile/:ID"
+            element={<Profile ActiveUser={user} />}
+          ></Route>
+          <Route
+            path="/JobsManager/jobs/:ID"
+            element={user ? <EditJob user={user} /> : <Portal />}
+          ></Route>
+        </Routes>
+      )}
     </div>
   );
 }

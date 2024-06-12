@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { GETDOC, SETDOC } from "../../server";
+import { GETDOC, SETDOC, QUERY } from "../../server";
 import "./Job.css";
 import { CreateToast } from "../../App";
-const Job = ({ user, users }) => {
+import Loading from "../../components/Loading/Loading";
+const Job = ({ user }) => {
   const [creator, setCreator] = useState(null);
+  const [loading, setLoading] = useState(false);
   const id = useParams().ID;
   const [alreadyApplied, setAlreadyApplied] = useState(null);
   const [job, setJob] = useState();
   useEffect(() => {
     const FetchJob = async () => {
+      setLoading(true);
       const fetchedJob = await GETDOC("Jobs", id);
+      const matches = await QUERY("users", "id", "==", job.Creator);
+      setCreator(matches[0]);
+
       setJob(fetchedJob);
+      setLoading(false);
     };
     FetchJob();
   }, []);
   useEffect(() => {
-    const FetchJob = async () => {
-      setCreator(users.find((user) => user.id === job.Creator));
-    };
-    FetchJob();
     setAlreadyApplied(
       job?.Applicants.find((Applicant) => Applicant === user.id)
     );
@@ -73,17 +76,16 @@ const Job = ({ user, users }) => {
     await SETDOC("Jobs", id, newJob);
     CreateToast("successfully applied", "success");
   };
-  console.log(creator);
   return (
     <div className="JobOffer">
-      {job ? (
-        <div>
+      {job && (
+        <>
           <div className="Title">
             <h4>{job.Designation}</h4>
             <h6>
               {creator?.Fname} {creator?.Lname} •{" "}
               <span className="location">{job.JobLocation}</span> •{" "}
-              <span className="location">{getTimePassed(job.DateAdded)}</span>•{" "}
+              <span className="location">{getTimePassed(job.DateAdded)}</span> •{" "}
               <span className="location">
                 {job.Applicants.length} Applicant
                 {job.Applicants.length > 1 ? "s" : ""}
@@ -95,13 +97,13 @@ const Job = ({ user, users }) => {
             {job.Qualification && (
               <div className="Detail">
                 <span>Qualification: </span>
-                <span> {job.Qualification}</span>
+                <span>{job.Qualification}</span>
               </div>
             )}
             {job.Vacancy && (
               <div className="Detail">
                 <span>Vacancy: </span>
-                <span> {job.Vacancy}</span>
+                <span>{job.Vacancy}</span>
               </div>
             )}
             {job.Experience && (
@@ -123,18 +125,21 @@ const Job = ({ user, users }) => {
               </div>
             )}
           </div>
+
           <div className="Description">
             <p className="Description">Description</p>
             <div
               dangerouslySetInnerHTML={{ __html: job.DescriptionContent }}
             ></div>
           </div>
+
           <div className="Description">
             <p className="Description">Desired Skills</p>
             <div
               dangerouslySetInnerHTML={{ __html: job.DesiredSkillsContent }}
             ></div>
           </div>
+
           {alreadyApplied ? (
             <h3>You already applied for this job</h3>
           ) : (
@@ -142,23 +147,11 @@ const Job = ({ user, users }) => {
               Apply Now
             </button>
           )}
-        </div>
-      ) : (
-        <h2>Loading...</h2>
+        </>
       )}
+      <Loading loading={loading} />
     </div>
   );
 };
 
 export default Job;
-/*
-{
-    "Creator": "HSeVpQpmgrU9MCR3RFKNTgeHqog2",
-    "Vacancy": "Immediate",
-    "Applicants": [
-        "T9MovfjqTygVpvoV0VnTgzxg3922"
-    ],
-    "JobLocation": "cairo - egypt",
-    "id": "8fc936b0-4f4d-41c0-81fd-3270b26a300e",
-    "DescriptionContent": "<p>abc</p>"
-}*/

@@ -8,6 +8,7 @@
 
 .Settings .Main {
   width: 88%;
+  background-color: white;
 }
 .Settings .BTNList {
   list-style: none;
@@ -16,32 +17,25 @@
   align-items: flex-start;
 }
 .Settings .General form {
-  display: grid;
-  gap: 50px;
+  display: flex;
+  flex-direction: column;
   margin: 30px auto;
   margin-right: 120px;
   padding: 20px 0;
   border-radius: 15px;
   place-items: center;
   width: 90%;
-  grid-template-areas:
-    "Fname Lname"
-    "Phone Phone"
-    "about about"
-    "Email Email"
-    "Gender DOB"
-    "Area Area"
-    "Uploads Uploads"
-    "Save Save";
 }
+
 .Settings .General #Uploads {
-  grid-area: Uploads;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+
+  width: 100%;
 }
-.Settings .General #Fname {
-  grid-area: Fname;
+.Settings .Photos {
+  display: flex;
+  gap: 10px;
 }
 .Settings .General #Area {
   grid-area: Area;
@@ -49,45 +43,49 @@
   gap: 5%;
 }
 
-.Settings .General #Lname {
-  grid-area: Lname;
-}
-.Settings .General #About {
-  grid-area: about;
-}
-.Settings .General #Username {
-  grid-area: Username;
-}
-.Settings .General #Phone {
-  grid-area: Phone;
-}
-.Settings .General #Email {
-  grid-area: Email;
-}
-
-.Settings .General #Gender {
-  grid-area: Gender;
-}
-.Settings .General #DOB {
-  grid-area: DOB;
-}
-.Settings .General #Save {
-  grid-area: Save;
-}
-.Settings .General div {
-  width: 100%;
-}
 .Settings .General label,
 .Settings .Privacy label {
   display: block;
   margin-bottom: 5px;
 }
-
+.FormItem {
+  position: relative;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 97%;
+  margin: 40px auto;
+  border: 1px solid var(--borders);
+  border-radius: 15px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+.FormItem h1 {
+  margin-right: auto;
+  background-color: white;
+  position: absolute;
+  top: -30px;
+  left: 18px;
+}
+.FormItem .Picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+}
+.FormItem .Cover {
+  width: 300px;
+  height: 100px;
+  border-radius: 10px;
+}
 .Settings .General select,
 .Settings .General input[type="date"] {
   margin: 10px 0 20px 0;
   border: none;
-
+  background-color: transparent;
+  color: black;
   border-bottom: 1px solid var(--buttons);
   height: 50px;
   width: 100%;
@@ -131,4 +129,58 @@
     padding-left: 10px;
     width: 100%;
   }
+}
+.photoController {
+  margin: 10px;
+  display: flex;
+  gap: 10px;
+  width: fit-content;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--borders);
+  border-radius: 15px;
+  overflow: hidden;
+}
+.photoController img {
+  width: 250px;
+  height: 250px;
+}
+.Delete-btn {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  width: 25px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  border: none;
+  background: white;
+  color: black;
+  border-bottom-left-radius: 5px;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  overflow-y: scroll;
+}
+
+.overlay-content {
+  max-width: 70%;
+  max-height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overlay-content img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
 }

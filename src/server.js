@@ -12,6 +12,9 @@ import {
   deleteDoc,
   updateDoc,
   query,
+  orderBy,
+  limit,
+  startAfter,
   where,
 } from "firebase/firestore";
 import {
@@ -95,6 +98,30 @@ export const GETCOLLECTION = async (target) => {
     return cleanData;
   } catch (error) {
     return error;
+  }
+};
+export const GETPOSTS = async (target, pageSize = 6, lastDoc = null) => {
+  try {
+    let q = query(
+      collection(db, target),
+      orderBy("TimeStamp", "desc"),
+      limit(pageSize)
+    );
+    if (lastDoc) {
+      q = query(q, startAfter(lastDoc));
+    }
+
+    const cleanData = [];
+    const srcData = await getDocs(q);
+    srcData.forEach((doc) => {
+      const info = doc.data();
+      cleanData.push({ ...info, id: doc.id });
+    });
+
+    return { data: cleanData, lastDoc: srcData.docs[srcData.docs.length - 1] };
+  } catch (error) {
+    console.error("Error fetching collection: ", error);
+    return { data: [], lastDoc: null };
   }
 };
 /** 
@@ -226,7 +253,6 @@ export const QUERY = async (collectionName, propertyInDB, operation, value) => {
     return matches;
   } catch (error) {
     console.error("Error during query:", error);
-    throw new Error("Error during query");
   }
 };
 // Decryption function

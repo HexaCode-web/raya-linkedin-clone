@@ -38,9 +38,13 @@ export default function Portal() {
     phone: "",
     cover: "",
     profilePhoto: "",
+    Education: "",
     title: "",
     cv: "",
+    SkillSet: [],
     photos: "",
+    Followers: [],
+    Following: [],
   });
   const [showModal, setShowModal] = React.useState(false);
   const handleShowModal = () => setShowModal(true);
@@ -66,7 +70,7 @@ export default function Portal() {
       Password: "",
     });
     setNewUser((prev) => {
-      return { ...prev, email: "", Password: "", Username: "" };
+      return { ...prev, email: "", Password: "" };
     });
   };
 
@@ -90,7 +94,6 @@ export default function Portal() {
       });
     }
   };
-  console.log(newUser);
   function getCurrentDateFormatted() {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, "0");
@@ -127,7 +130,7 @@ export default function Portal() {
       await SETDOC(
         "users",
         authUser.uid,
-        { ...newUser, id: authUser.uid, Password: "", Active: true },
+        { ...newUser, id: authUser.uid, Password: "" },
         true
       );
       sessionStorage.setItem(
@@ -172,7 +175,6 @@ export default function Portal() {
           CreateToast("sorry your account have been deleted", "info");
         return;
       } else {
-        await SETDOC("users", authUser.uid, { ...DBuser, Active: true });
         sessionStorage.setItem(
           "activeUser",
           JSON.stringify({ id: encrypt(DBuser.id) })
@@ -199,21 +201,6 @@ export default function Portal() {
         CreateToast(error.message, "error");
       }
     }
-  };
-
-  const logOut = async () => {
-    let cleanData = [];
-    await GETCOLLECTION("users").then((response) => {
-      cleanData = response;
-    });
-    cleanData.forEach(async (User) => {
-      if (User.id === user.id) {
-        User.Active = false;
-      }
-      await SETDOC("users", User.id, { ...User });
-      sessionStorage.clear();
-      window.location.href = "/";
-    });
   };
 
   useEffect(() => {

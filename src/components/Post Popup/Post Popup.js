@@ -4,6 +4,9 @@ import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { GiCancel } from "react-icons/gi";
 import { decrypt } from "../../server";
+import { Comment } from "./Comment";
+import LetteredAvatar from "../LetteredAvatar/LetteredAvatar";
+import DOMPurify from "dompurify";
 
 const PostPopup = ({
   post,
@@ -12,7 +15,6 @@ const PostPopup = ({
   LikePost,
   togglePopup,
   AddComment,
-  users,
 }) => {
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("activeUser")) || ""
@@ -22,6 +24,10 @@ const PostPopup = ({
     PersonId: user,
     Date: "",
   });
+  const sanitizedData = () => ({
+    __html: DOMPurify.sanitize(post.Body),
+  });
+
   const [showComments, setShowComments] = useState(false);
   function getCurrentDateFormatted() {
     const currentDate = new Date();
@@ -51,33 +57,7 @@ const PostPopup = ({
     }
   };
   const RenderComments = post?.Comments.map((comment, index) => {
-    let NameToRender;
-    const Person = users.find((User) => {
-      return User.id == comment.PersonId;
-    });
-
-    return (
-      <div className="Post" key={index}>
-        <div
-          className="Data"
-          onClick={() => {
-            window.location.href = `/Profile/${Person?.id}`;
-          }}
-        >
-          <img src={Person?.Profile} className="profilePhoto"></img>
-          <p className="name">
-            {Person ? Person.Fname : "deleted user"}
-            {Person?.Lname}
-          </p>
-        </div>
-        <div className="Date">
-          <p>{comment.Date}</p>
-        </div>
-        <div className="PostBody">
-          <p>{comment.replyText}</p>
-        </div>
-      </div>
-    );
+    return <Comment comment={comment} key={index} />;
   });
   return (
     <div className="PopupContainer">
@@ -92,28 +72,37 @@ const PostPopup = ({
           onClick={togglePopup}
         />
         <div
-          className="Data"
+          className="Data-wrapper"
           onClick={() => {
             window.location.href = `/Profile/${postCreator?.id}`;
           }}
         >
-          <img
-            src={postCreator?.Profile}
-            className="profilePhoto"
-            alt="Profile"
-          />
-          <p className="name">
-            {postCreator
-              ? `${postCreator.Fname} ${postCreator.Lname}`
-              : "Deleted User"}
-          </p>
+          {postCreator?.Profile ? (
+            <img src={postCreator?.Profile} className="profilePhoto"></img>
+          ) : (
+            <LetteredAvatar
+              Name={postCreator?.Fname}
+              customHeight="40px"
+              customWidth="40px"
+            />
+          )}
+
+          <div className="Data">
+            <p className="name">
+              {postCreator ? postCreator.Fname : "deleted user"}{" "}
+              {postCreator?.Lname}
+            </p>
+            <p className="title">{postCreator?.title}</p>
+            <div className="Date">
+              <p>{post.Date}</p>
+            </div>
+          </div>
         </div>
-        <div className="Date">
-          <p>{post.Date}</p>
-        </div>
-        <div className="PostBody">
-          <p>{post.Body}</p>
-        </div>
+        <div
+          className="PostBody"
+          dangerouslySetInnerHTML={sanitizedData()}
+        ></div>
+
         <div className="Buttons">
           <div className="Like" onClick={LikePost}>
             {userLiked ? <AiFillLike /> : <AiOutlineLike />}

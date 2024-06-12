@@ -1,122 +1,96 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { v4 as uuidv4 } from "uuid";
-import { CreateToast } from "../../App";
-import { GETCOLLECTION, SETDOC } from "../../server";
+
+import { GETPOSTS, QUERY } from "../../server";
 
 import Post from "../../components/Post/Post";
+import Loading from "../../components/Loading/Loading";
+import CreatePost from "../../components/Create Post/CreatePost";
+import Sidebar from "../../components/Sidebar/Sidebar";
 const Home = ({ User }) => {
-  const [newPost, setNewPost] = useState({
-    ID: "",
-    Creator: "",
-    Body: "",
-    Date: getCurrentDateFormatted(),
-    Likes: [],
-    Comments: [],
-  });
-  const [posts, SetPosts] = useState([]);
-  const [users, SetUsers] = useState([]);
-  function getCurrentDateFormatted() {
-    const currentDate = new Date();
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // January is 0!
-    const year = String(currentDate.getFullYear()).slice(-2);
-    const hours = String(currentDate.getHours()).padStart(2, "0");
-    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
-  }
-  const updateInput = (e) => {
-    const { name, value } = e.target;
-    setNewPost((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-  };
-  const uploadPost = async () => {
-    if (newPost.Body === "") {
-      return;
-    }
-    setNewPost({
-      ID: "",
-      Creator: "",
-      Body: "",
-      Date: getCurrentDateFormatted(),
-      Likes: 0,
-      Comments: [],
-    });
-    const Post = { ...newPost, ID: uuidv4(), Creator: User.id };
-    await SETDOC("Posts", Post.ID, Post, true);
-    await FetchPosts();
-    CreateToast("Post Uploaded", "success");
-  };
-  const FetchPosts = async () => {
-    const Posts = await GETCOLLECTION("Posts");
-    const parseDate = (dateString) => {
-      const [day, month, yearTime] = dateString.split("/");
-      const [year, time] = yearTime.split(" ");
-      const [hour, minute] = time.split(":");
-      const isoDateString = `20${year}-${month}-${day}T${hour}:${minute}:00`;
-      return new Date(isoDateString);
+  const [posts, setPosts] = useState([]);
+  const [oldPosts, setOldPosts] = useState([]);
+  const [lastDoc, setLastDoc] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [activeProfile, setActiveProfile] = useState();
+  useEffect(() => {
+    loadInitialData();
+  }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+          document.documentElement.offsetHeight ||
+        loading
+      )
+        return;
+      loadMorePosts();
     };
 
-    // Sorting the array based on the parsed dates
-    const sortedArray = Posts.sort((a, b) => {
-      const dateA = parseDate(a.Date);
-      const dateB = parseDate(b.Date);
-      return dateB - dateA;
-    });
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading]);
 
-    const Users = await GETCOLLECTION("users");
-    SetPosts(sortedArray);
-    SetUsers(Users);
+  const loadInitialData = async () => {
+    setLoading(true);
+    const { data: postData, lastDoc: newLastDoc } = await GETPOSTS("Posts");
+    setPosts(postData);
+    setLastDoc(newLastDoc);
+    setLoading(false);
   };
-  useEffect(() => {
-    FetchPosts();
-  }, []);
-  const RenderPosts = posts.map((post) => {
-    const postCreator = users.find((user) => user.id === post.Creator);
+  const loadMorePosts = async () => {
+    setOldPosts(posts);
+
+    if (loading || !hasMore) return;
+    setLoading(true);
+
+    const { data: morePosts, lastDoc: newLastDoc } = await GETPOSTS(
+      "Posts",
+      3,
+      lastDoc
+    );
+    setPosts((prevPosts) => [...prevPosts, ...morePosts]);
+    setLastDoc(newLastDoc);
+    setHasMore(morePosts.length > 0);
+    setLoading(false);
+  };
+  const RenderPosts = posts?.map((post) => {
+    return (
+      <Post
+        post={post}
+        key={post.id}
+        User={User}
+        setActiveProfile={setActiveProfile}
+      />
+    );
+  });
+  const RenderOldPosts = oldPosts?.map((post) => {
+    const postCreator = QUERY("users");
     return (
       <Post
         post={post}
         postCreator={postCreator}
         key={post.id}
         User={User}
-        users={users}
+        setActiveProfile={setActiveProfile}
       />
     );
   });
   return (
     <div className="Home">
-      <div className="SideBar">
-        <div className="Photos">
-          <img className="Banner" src={User.Cover}></img>
-
-          <img src={User.Profile} className="profilePhoto"></img>
-        </div>
-        <p className="name">
-          {User.Fname} {User.Lname}
-        </p>
-      </div>
+      {activeProfile && (
+        <Sidebar
+          Profile={activeProfile}
+          User={User}
+          setActiveProfile={setActiveProfile}
+        />
+      )}
       <div className="Main">
-        <div className="Post-wrapper">
-          <div>
-            <img src={User.Profile} className="profilePhoto"></img>
-          </div>
-          <input
-            name="Body"
-            type="text"
-            className="PostInput"
-            value={newPost.Body}
-            onChange={updateInput}
-          />
-          <button className="Button" onClick={uploadPost}>
-            Upload
-          </button>
-        </div>
-        <div className="Timeline">{RenderPosts}</div>
+        <CreatePost User={User} />
+        <div className="Timeline">{loading ? RenderOldPosts : RenderPosts}</div>
+        <Loading loading={loading} />
       </div>
     </div>
   );

@@ -1,0 +1,67 @@
+.searchPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.searchPage .Menu ul p {
+  margin: 0;
+}
+.searchPage .Menu ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 20px;
+}
+.searchPage .Menu ul li {
+  border: 1px solid var(--buttons);
+  padding: 5px 10px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.5s all;
+  text-align: center;
+}
+.searchPage .Menu ul .active {
+  background-color: var(--buttons);
+  color: white;
+  font-weight: bolder;
+}
+.User-wrapper {
+  background-color: white;
+  position: relative;
+  padding-top: 10px;
+  display: flex;
+  border-radius: 15px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2%;
+  margin-top: 10px;
+  overflow: hidden;
+  width: 40%;
+  cursor: pointer;
+  padding-left: 20px;
+}
+.User-wrapper .Data {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: baseline;
+}
+.User-wrapper .Data-wrapper p {
+  margin-bottom: 0;
+}
+.Results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2%;
+  padding: 20px 0;
+  background-color: #f4f2ee;
+  width: 100%;
+}
+.Results .Post {
+  width: 60%;
+}

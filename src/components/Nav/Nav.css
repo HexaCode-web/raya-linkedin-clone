@@ -15,7 +15,26 @@
   top: 0;
   background-color: #f3f3f3;
 }
-
+.searchWrapper {
+  cursor: pointer;
+}
+.searchWrapper .searchIcon {
+  font-size: 1.5rem;
+}
+.searchWrapper input {
+  background-color: white;
+  color: black;
+  border-radius: 15px;
+  width: 0px;
+  opacity: 0;
+  transition: 0.5s all;
+}
+.searchWrapper .ShowSearch {
+  width: 300px;
+  opacity: 1;
+  padding: 5px;
+  margin: 0 10px;
+}
 .NavContainer-bg .navbar a,
 .NavContainer-bg .navbar a:focus,
 .NavContainer-bg .Pricing {

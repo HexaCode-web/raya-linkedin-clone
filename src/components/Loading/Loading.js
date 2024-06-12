@@ -4,7 +4,7 @@ const Loading = ({ loading }) => {
   return (
     <div className={`Loading-wrapper ${loading ? "" : "FADE"}`}>
       <div className="ring">
-        RAYA <span></span>
+        Loading <span></span>
       </div>
     </div>
   );

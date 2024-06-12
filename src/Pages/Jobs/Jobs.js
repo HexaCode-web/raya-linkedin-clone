@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { GETCOLLECTION } from "../../server";
 import "./Jobs.css";
-const Jobs = ({ Users, user }) => {
+import JobCard from "../../components/Job/JobCard";
+const Jobs = ({ user }) => {
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
@@ -10,35 +11,8 @@ const Jobs = ({ Users, user }) => {
     };
     FetchJobs();
   }, []);
-  const renderJobs = jobs.map((job) => {
-    const alreadyApplied = job.Applicants.find(
-      (Applicant) => Applicant === user.id
-    );
-    const jobCreator = Users.find((user) => user.id === job.Creator);
-    return (
-      <div
-        className="JobCard"
-        key={job.id}
-        onClick={() => {
-          window.location.href = `/Job/${job.id}`;
-        }}
-      >
-        <div className="Data">
-          <img src={jobCreator.Profile} className="profilePhoto"></img>
-          <div className="InnerData">
-            <p className="Title">{job.Designation}</p>
-            <p className="name">
-              {jobCreator.Fname} {jobCreator.Lname}
-            </p>
-            <p className="Location">{job.JobLocation}</p>
-          </div>
-        </div>
-        <div className="Date">
-          <p>{job.DateAdded}</p>
-        </div>
-        {alreadyApplied && <div className="status">Applied</div>}
-      </div>
-    );
+  const renderJobs = jobs.map((job, index) => {
+    return <JobCard job={job} user={user} key={index} />;
   });
   return <div className="Jobs">{renderJobs}</div>;
 };

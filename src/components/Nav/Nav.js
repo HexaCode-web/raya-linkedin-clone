@@ -1,10 +1,9 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import "./Nav.css";
 import NavDesktop from "./NavDesktop";
 import NavMobile from "./NavMobile";
 import Logo from "../../assests/logo.jpg";
-const Nav = ({ screenWidth, User }) => {
+const Nav = ({ screenWidth, User, SearchValue, setSearchValue }) => {
   const [Color, setColor] = useState(false);
 
   const ChangeColor = () => {
@@ -42,9 +41,13 @@ const Nav = ({ screenWidth, User }) => {
         className={`Logo ${Color ? "Small" : ""}`}
       />
       {screenWidth > 1000 ? (
-        <NavDesktop screenWidth={screenWidth} User={User} />
+        <NavDesktop
+          setSearchValue={setSearchValue}
+          SearchValue={SearchValue}
+          User={User}
+        />
       ) : (
-        <NavMobile screenWidth={screenWidth} User={User} />
+        <NavMobile User={User} />
       )}
     </div>
   );

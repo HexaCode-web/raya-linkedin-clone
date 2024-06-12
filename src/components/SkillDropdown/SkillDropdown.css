@@ -1,0 +1,53 @@
+.dropdown-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.dropdown-list {
+  position: absolute;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: white;
+  color: black;
+  z-index: 1;
+}
+
+.dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #555;
+}
+
+.selected-skill {
+  margin: 5px 0;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  color: black;
+  flex-wrap: wrap;
+}
+.selected-skill .Skill {
+  border-radius: 15px;
+  user-select: none;
+
+  padding: 0 10px;
+  border: 1px solid var(--borders);
+  width: fit-content;
+}
